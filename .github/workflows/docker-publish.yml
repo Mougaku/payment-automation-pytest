@@ -1,0 +1,43 @@
+name: Build and Push Docker Image
+
+# 触发机制：当 main 分支有代码推送时触发
+on:
+  push:
+    branches: [ "main" ]
+  # 允许手动在网页端点击触发
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 拉取代码
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. 登录 Docker Hub
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # 3. 设置 Docker Buildx (构建工具)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # 4. 构建并推送镜像
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          # 这里的标签逻辑：
+          # latest: 永远指向最新版
+          # ${{ github.sha }}: 指向具体的某次提交哈希（方便回滚）
+          # 注意：把下面的 'your-dockerhub-username/your-repo-name' 换成你自己的！
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/payment-automation:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/payment-automation:${{ github.sha }}

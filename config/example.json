@@ -1,0 +1,120 @@
+{
+  "host": "https://google.com",
+  "auth": {
+    "token": "token",
+    "username": ""
+  },
+  "pos_config": {
+    "login_url": "/Api/User/Login",
+    "token_header_key": "Authorization",
+    "login_params": {
+       "loginId": "loginId",
+       "password": "password",
+       "culture": 0
+    }
+  },
+  "payment_cases": [
+    {
+      "desc": "微信支付",
+      "method": "GET",
+      "url": "url",
+      "params": {},
+      "assert_type": "check_qrcode",
+      "//assert_type": "pending"
+    },
+    {
+      "desc": "支付宝支付",
+      "method": "GET",
+      "url": "url",
+      "params": {},
+      "assert_type": "check_qrcode",
+      "//assert_type": "pending",
+      "enable_exchange_flow": true
+    },
+    {
+      "desc": "员工卡支付",
+      "method": "POST",
+      "url": "url",
+      "params": {
+        "customerId": "0",
+        "price": 0,
+         "payCode": "payCode",
+        "paymentType": 0,
+        "brandSyrupCode": "0",
+        "toppingSyrupCode": "0",
+        "carbonationCode": "0",
+        "cupSizeCode": "0"
+      },
+      "assert_type": "check_success",
+      "//assert_type": "pending"
+    },
+    {
+      "desc": "POS机支付",
+      "method": "POST",
+      "url": "url",
+      "params": {
+        "customerId": "0",
+        "purchaseItems": [
+         {
+           "price": 1,
+           "productCode": "0",
+           "redeemTimes": 0,
+            "lifetime": 0,
+           "expiryDays": 0
+          }
+        ]
+      },
+      "assert_type": "check_success",
+      "//assert_type": "pending"
+    }
+  ],
+  "db_config": {
+    "host": "host",
+    "port": 0,
+    "user": "user",
+    "password": "password",
+    "database": "database",
+    "charset": "utf8",
+    "order_table_name": "[]",
+    "order_field_name": "[]",
+    "redeem_table_name": "[]",
+    "redeem_field_name": "[]"
+  },
+  "exchange_config": {
+    "url": "url",
+    "timeout_seconds": 60,
+    "poll_interval": 5,
+    "static_params": {
+      "redeemData": [
+       {
+        "customerId": "0",
+        "isLocalRedeem": 0,
+        "towerSerialNumber": "0",
+        "equipmentSN": "",
+        "brandSyrupCode": "0",
+        "toppingSyrupCode": "0",
+        "carbonationCode": "0",
+        "cupSizeCode": "0",
+        "payment": "0",
+        "redeemTimes": "0",
+        "redeemHours": "0",
+        "expiryDate": "",
+        "paymentType": "0",
+        "redeemStatus": 0,
+        "redeemDateTime": "",
+        "redeemQRCode": "",
+        "orderId": "",
+        "volume": 0,
+        "subBrandSyrupCode": "",
+        "subToppingSyrupCode": "",
+        "qrCodeVersion": "0"
+       }
+      ]
+    }
+  },
+  "refund_config": {
+    "url": "url",
+    "timeout_seconds": 30,
+    "poll_interval": 3
+  }
+}

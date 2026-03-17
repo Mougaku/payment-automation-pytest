@@ -16,3 +16,4 @@ qr_*.png
 # IDE 配置
 .idea/
 .vscode/
+.venv/

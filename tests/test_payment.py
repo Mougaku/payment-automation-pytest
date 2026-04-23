@@ -26,6 +26,7 @@ class TestPayment:
         assert_type = case_info.get("assert_type")
         order_static_params = case_info.get("params", {})
         enable_exchange = case_info.get("enable_exchange_flow", False)
+        refund_url = case_info.get("refund_url")
 
         print(f"\n\n>>> 正在测试: {desc}")
 
@@ -47,7 +48,7 @@ class TestPayment:
 
                 token = login_res.json().get("content", {}).get("token") or login_res.json().get("Token")
                 allure.attach(str(login_res.json()), name="POS登录返回", attachment_type=allure.attachment_type.JSON)
-                assert token, "登录成功但未找到 Token"
+                assert token, "登录失败，未找到 Token"
 
                 header_key = pos_conf.get("token_header_key", "Token")
                 # 这里的 custom_headers 仅供 POS 支付接口使用
@@ -130,7 +131,7 @@ class TestPayment:
             handler = ExchangeHandler(api_client, db)
             handler.process_exchange(final_order_id)
             refund_handler = RefundHandler(api_client, db)
-            refund_handler.process_refund(final_order_id)
+            refund_handler.process_refund(final_order_id, refund_url)
 
         print(f"\n{'=' * 15} ✅ {desc} 测试通过 {'=' * 15}")
 

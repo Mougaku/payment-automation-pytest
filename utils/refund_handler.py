@@ -16,24 +16,23 @@ class RefundHandler:
         self.field_id = env_config.db_config.get("order_field_name", "[Id]")
         self.refund_conf = env_config._config.get("refund_config", {})
 
-    def process_refund(self, order_id):
+    def process_refund(self, order_id, refund_url):
         """执行退款流程：调用接口 -> 校验DB"""
         print(f"\n{'=' * 10} ↩️ 进入退款流程 {'=' * 10}")
 
         # 1. 调用退款接口
-        self._call_refund_api(order_id)
+        self._call_refund_api(order_id, refund_url)
 
         # 2. 校验数据库退款状态
         self._verify_refund_db_status(order_id)
 
-    def _call_refund_api(self, order_id):
-        with allure.step("步骤9: 执行退款接口 (AliPayRefundJob)"):
-            url = self.refund_conf.get("url")
-            params = {"orderId": order_id}
+    def _call_refund_api(self, order_id, refund_url):
+        with allure.step("步骤9: 执行退款接口 (RefundJob)"):
+            url = refund_url
 
-            print(f"  -> [Action] 发起退款请求: {url} | Params: {params}")
+            print(f"  -> [Action] 发起退款请求: {url}")
 
-            res = self.api_client.get(url, params=params)
+            res = self.api_client.get(url)
             allure.attach(str(res.status_code), name="退款接口原始响应", attachment_type=allure.attachment_type.TEXT)
             assert res.status_code == 204, f"退款接口报错: {res.status_code}"
             print(f"✅ 退款请求发送成功 (HTTP 200)，服务端未返回内容 (Empty Body)，视为成功。")

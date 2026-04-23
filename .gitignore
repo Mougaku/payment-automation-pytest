@@ -10,6 +10,7 @@ config/stage.json
 # 测试报告和临时文件
 report/
 reports/
+reports/*
 allure-results/
 logs/
 qr_*.png

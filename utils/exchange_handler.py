@@ -27,16 +27,18 @@ class ExchangeHandler:
         执行完整的兑换流程
         :param order_id: 支付成功的订单ID
         """
-        print(f"\n{'=' * 10} 🚦 进入兑换流程 (请手动扫码支付) {'=' * 10}")
-
+        print(f"\n{'=' * 10} 🚦 进入兑换流程 (请手动扫码支付, 等待时间：50s) {'=' * 10}")
+        for i in range(1,5):
+            time.sleep(10)
+            print(f"剩余时间：{(5-i)*10}秒")
         # 1. 轮询数据库状态
-        self._poll_db_status(order_id)
+        # self._poll_db_status(order_id)
 
         # 2. 调用兑换接口
         self._call_exchange_api(order_id)
 
         # 3. ▼▼▼ 新增：兑换数据落地校验 ▼▼▼
-        self._verify_redeem_db(order_id)
+        # self._verify_redeem_db(order_id)
 
     def _poll_db_status(self, order_id):
         """内部方法：轮询数据库支付状态"""

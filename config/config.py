@@ -12,7 +12,7 @@ class ConfigLoader:
         # 1. 获取环境变量 TEST_ENV
         # os.getenv("变量名", "默认值")
         # 如果没设置变量，默认跑 dev 环境
-        self.env = os.getenv("TEST_ENV", "dev").lower()
+        self.env = os.getenv("TEST_ENV", "stage").lower()
 
         print(f"\n=================================")
         print(f" 🚀 当前运行环境: {self.env}")

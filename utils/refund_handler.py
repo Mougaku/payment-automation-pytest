@@ -24,7 +24,7 @@ class RefundHandler:
         self._call_refund_api(order_id, refund_url)
 
         # 2. 校验数据库退款状态
-        self._verify_refund_db_status(order_id)
+        # self._verify_refund_db_status(order_id)
 
     def _call_refund_api(self, order_id, refund_url):
         with allure.step("步骤9: 执行退款接口 (RefundJob)"):

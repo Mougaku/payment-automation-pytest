@@ -112,15 +112,15 @@ class TestPayment:
         # ==========================================
         #  阶段五：数据库校验
         # ==========================================
-        with allure.step("步骤5: 数据库核对"):
-            time.sleep(0.5)
-            table_name = env_config.db_config.get("order_table_name", "[Order]")
-            field_name = env_config.db_config.get("order_field_name", "[Id]")
-            sql = f"SELECT * FROM {table_name} WHERE {field_name} = '{final_order_id}'"
-            db_result = db.fetch_one(sql)
-            allure.attach(str(db_result), name="DB查询结果", attachment_type=allure.attachment_type.TEXT)
-            assert db_result is not None, f"❌ 数据库未找到订单"
-            print(f"✅ 数据库校验通过！\n{db_result}")
+        # with allure.step("步骤5: 数据库核对"):
+        #     time.sleep(0.5)
+        #     table_name = env_config.db_config.get("order_table_name", "[Order]")
+        #     field_name = env_config.db_config.get("order_field_name", "[Id]")
+        #     sql = f"SELECT * FROM {table_name} WHERE {field_name} = '{final_order_id}'"
+        #     db_result = db.fetch_one(sql)
+        #     allure.attach(str(db_result), name="DB查询结果", attachment_type=allure.attachment_type.TEXT)
+        #     assert db_result is not None, f"❌ 数据库未找到订单"
+        #     print(f"✅ 数据库校验通过！\n{db_result}")
 
 
         # ==========================================

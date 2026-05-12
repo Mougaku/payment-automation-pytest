@@ -96,6 +96,10 @@ class TestPayment:
                 pytest.fail(f"❌ 下单失败: {err_msg}")
 
             final_order_id = server_order_id
+
+            # 动态设置 Allure 的标题，使用 Python 的 f-string 进行格式化
+            allure.dynamic.title(f"[{final_order_id}] {case_info['desc']}")
+
             final_qr_content = res_json.get("PaymentQRCode")
 
             if assert_type == "check_qrcode" and not final_qr_content:
@@ -129,7 +133,7 @@ class TestPayment:
         if enable_exchange:
             # 这样 handler 内部调用接口时，会使用 api_client 默认的常规 Token
             handler = ExchangeHandler(api_client, db)
-            handler.process_exchange(final_order_id)
+            handler.process_exchange(final_order_id, desc)
             refund_handler = RefundHandler(api_client, db)
             refund_handler.process_refund(final_order_id, refund_url)
 

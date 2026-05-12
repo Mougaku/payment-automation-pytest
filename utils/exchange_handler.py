@@ -22,17 +22,18 @@ class ExchangeHandler:
         self.redeem_table = env_config.db_config.get("redeem_table_name", "[RedeemDetail]")
         self.redeem_field = env_config.db_config.get("redeem_field_name", "[OrderId]")
 
-    def process_exchange(self, order_id):
+    def process_exchange(self, order_id, desc):
         """
         执行完整的兑换流程
         :param order_id: 支付成功的订单ID
         """
-        print(f"\n{'=' * 10} 🚦 进入兑换流程 (请手动扫码支付, 等待时间：50s) {'=' * 10}")
-        for i in range(1,5):
-            time.sleep(10)
-            print(f"剩余时间：{(5-i)*10}秒")
+        print(f"\n{'=' * 10} 🚦 进入兑换流程 (请手动扫码支付, 等待时间：30s) {'=' * 10}")
         # 1. 轮询数据库状态
         # self._poll_db_status(order_id)
+        if desc != "员工卡支付":
+            for i in range(1,3):
+                time.sleep(10)
+                print(f"剩余时间：{(3-i)*10}秒")
 
         # 2. 调用兑换接口
         self._call_exchange_api(order_id)
